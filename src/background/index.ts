@@ -1,27 +1,23 @@
-chrome.action.onClicked.addListener((tab) => {
+chrome.action.onClicked.addListener(async (tab) => {
     if (!tab.id) return;
 
     const tabId = tab.id;
-    chrome.tabs.sendMessage(tabId, { action: 'TOGGLE_SCAN' }, () => {
-        if (chrome.runtime.lastError) {
-            console.log('Content script not ready. Attempting to inject...');
-            chrome.scripting.executeScript({
-                target: { tabId: tabId },
-                files: ['content.js']
-            }).then(() => {
-                chrome.scripting.insertCSS({
-                    target: { tabId: tabId },
-                    files: ['content.css']
-                });
-            }).then(() => {
-                setTimeout(() => {
-                    chrome.tabs.sendMessage(tabId, { action: 'TOGGLE_SCAN' });
-                }, 100);
-            }).catch((err) => {
-                console.error('Script injection failed:', err);
-            });
-        }
-    });
+
+    try {
+        await chrome.scripting.executeScript({
+            target: { tabId: tabId },
+            files: ['content.js']
+        });
+        await chrome.scripting.insertCSS({
+            target: { tabId: tabId },
+            files: ['content.css']
+        });
+        setTimeout(() => {
+            chrome.tabs.sendMessage(tabId, { action: 'TOGGLE_SCAN' });
+        }, 100);
+    } catch (err) {
+        console.error('Script injection failed:', err);
+    }
 });
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
