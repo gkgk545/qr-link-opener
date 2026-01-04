@@ -1,0 +1,18 @@
+{
+  "name": "qr_link_opener",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build -c vite.config.background.ts && vite build -c vite.config.content.ts && cp src/content/styles.css dist/content.css",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.1.32",
+    "@types/node": "^25.0.3",
+    "jsqr": "^1.4.0",
+    "typescript": "~5.9.3",
+    "vite": "^7.2.4"
+  }
+}

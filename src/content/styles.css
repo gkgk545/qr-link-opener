@@ -1,0 +1,20 @@
+/* Overlay for QR Selection */
+#qr-selection-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999999;
+  cursor: crosshair;
+  background-color: rgba(0, 0, 0, 0.3); /* Dimmed background */
+  user-select: none;
+}
+
+#qr-selection-box {
+  position: absolute;
+  border: 2px solid #00ff00;
+  background-color: rgba(0, 255, 0, 0.2);
+  display: none;
+  pointer-events: none; /* Allow events to pass through to overlay */
+}
